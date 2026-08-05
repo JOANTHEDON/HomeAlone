@@ -6,8 +6,16 @@ public class CoinManager : MonoBehaviour
 {
     [SerializeField]private TextMeshProUGUI _textUI;
     [SerializeField]private float _coinSpawnTime = 1f;
-    [SerializeField]private bool _startCoinSpawn = false;
-    public bool StartCoinSpawn() => _startCoinSpawn;
+    private bool _startCoinSpawn = false;
+    public bool StartCoinSpawn 
+    { 
+        get => _startCoinSpawn;
+        set
+        {
+            _startCoinSpawn = value;
+        }
+    }
+    
 
     private int currentCoinCount = 0;
 
@@ -20,12 +28,20 @@ public class CoinManager : MonoBehaviour
 
      IEnumerator CoinSpawnCoroutine()
     {
-        while(_startCoinSpawn == true)
+        while(true)
         {
-            yield return new WaitForSeconds(_coinSpawnTime);
-            currentCoinCount++;
-            _textUI.text = currentCoinCount.ToString();
-            Debug.Log("coin increased");
+            if (_startCoinSpawn)
+            {
+                yield return new WaitForSeconds(_coinSpawnTime);
+                currentCoinCount++;
+                _textUI.text = currentCoinCount.ToString();
+                Debug.Log("coin increased");
+            }
+            else
+            {
+                yield return null;
+            }
+            
             
         }
     }
