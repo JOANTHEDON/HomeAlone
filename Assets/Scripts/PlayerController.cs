@@ -2,16 +2,28 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField]private CoinManager _coinManager;
 
-    private PlayerLocomotionInput playerLocomotionInput;
-    private Rigidbody2D rb;
+    private PlayerLocomotionInput _playerLocomotionInput;
+    private Rigidbody2D _rb;
 
     private void Awake() {
-        rb = GetComponent<Rigidbody2D>();
-        playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
+        
+        _rb = GetComponent<Rigidbody2D>();
+        _playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
+        if(_coinManager == null) return;
     }
 
     private void FixedUpdate() {
-        rb.linearVelocity = playerLocomotionInput.MovementInput * moveSpeed;
+        _rb.linearVelocity = _playerLocomotionInput.MovementInput * moveSpeed;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Door"))
+        {
+            _coinManager.StartCoinSpawn = true;
+            Debug.Log("player colliding with door");
+        }
     }
 }
