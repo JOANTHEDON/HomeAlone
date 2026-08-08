@@ -5,20 +5,20 @@ public class CradleController : MonoBehaviour {
     [SerializeField] private SpriteRenderer _cradleSpriteRenderer;
     [SerializeField] private Sprite _closedCradleSprite;
 
-
-
     private bool _hasClosed = false;
+    public bool HasClosed => _hasClosed;
+
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (_hasClosed) return;
 
         // Check if object entering trigger is the Player
         if (collision.CompareTag("Player")) {
-            // 1. Lock player movement
-            PlayerController player = collision.GetComponent<PlayerController>();
-            if (player != null) {
-                player.isMovementDisabled = true;
-            }
+            // // 1. Lock player movement
+            // PlayerController player = collision.GetComponent<PlayerController>();
+            // if (player != null) {
+            //     player.isMovementDisabled = true;
+            // }
 
             // 2. Change cradle to closed state (Method A: Sprite Swap)
             if (_cradleSpriteRenderer != null && _closedCradleSprite != null) {
