@@ -1,37 +1,42 @@
-using Unity.Cinemachine;
-
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField]private GameObject _playerPrefab;
-    [SerializeField]private Transform _spawnPoint;
-    [SerializeField]private CinemachineCamera _cameraFollow;
-    [SerializeField]private CoinManager _coinManager;
-    [SerializeField]private CradleController _cradleController;
-    [SerializeField]private DoorController _door;
+    [SerializeField] private GameObject _playerPrefab;
+    [SerializeField] private Transform _spawnPoint;
+    [SerializeField] private CameraFollow _cameraFollow;
+    [SerializeField] private CoinManager _coinManager;
+    [SerializeField] private CradleController _cradleController;
+    [SerializeField] private DoorController _door;
     private bool _disablePlayer = false;
-    GameObject Player;
+    private GameObject Player;
 
-    public void Awake()
+    private void Awake()
     {
-        if(_playerPrefab == null)return;
-        if(_cameraFollow == null)return;
         _disablePlayer = false;
-        
-        
     }
 
-    public void Start()
+    private void Start()
     {
-        Player =Instantiate(_playerPrefab,_spawnPoint.position, Quaternion.identity);
+        if (_playerPrefab == null)
+        {
+            Debug.LogWarning("GameController: Player prefab is not assigned.");
+            return;
+        }
+
+        Player = Instantiate(_playerPrefab, _spawnPoint.position, Quaternion.identity);
         InitializeCameraFollow(Player.transform);
     }
 
     private void InitializeCameraFollow(Transform target)
-    {   
-        _cameraFollow.Follow = target;
-        
+    {
+        if (_cameraFollow == null)
+        {
+            Debug.LogWarning("GameController: CameraFollow reference is not assigned.");
+            return;
+        }
+
+        _cameraFollow.SetTarget(target);
     }
 
     private void DisablePlayer()
