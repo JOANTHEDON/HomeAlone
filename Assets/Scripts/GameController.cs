@@ -8,6 +8,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private CoinManager _coinManager;
     [SerializeField] private CradleController _cradleController;
     [SerializeField] private DoorController _door;
+    [SerializeField]private GhostController _ghost;
+    [SerializeField]private Transform _ghostSpawnPoint;
     private bool _disablePlayer = false;
     private GameObject Player;
 
