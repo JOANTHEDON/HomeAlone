@@ -8,8 +8,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private CoinManager _coinManager;
     [SerializeField] private CradleController _cradleController;
     [SerializeField] private DoorController _door;
-    [SerializeField]private GhostController _ghost;
+    [SerializeField] private GameObject _ghostPrefab;
     [SerializeField]private Transform _ghostSpawnPoint;
+    
+    private bool _hasghostSpawned = false;
     private bool _disablePlayer = false;
     private GameObject Player;
 
@@ -48,11 +50,20 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if(_cradleController.HasClosed == true)
+        if(_cradleController.HasClosed == true && _hasghostSpawned == false)
         {
             _coinManager.StartCoinSpawn = true;
             DisablePlayer();
+            SpawnGhost();
+            _hasghostSpawned = true;
         }
+        
+    }
+
+    private void SpawnGhost()
+    {
+        if(_ghostPrefab == null) return;
+        GameObject ghost = Instantiate(_ghostPrefab, _ghostSpawnPoint.position, Quaternion.identity);
         
     }
     

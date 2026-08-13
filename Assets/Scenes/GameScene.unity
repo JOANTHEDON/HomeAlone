@@ -402,7 +402,7 @@ MonoBehaviour:
   _coinManager: {fileID: 498899988}
   _cradleController: {fileID: 2042061642}
   _door: {fileID: 852810813}
-  _ghost: {fileID: 3938209104433253827, guid: 74e625893968e604db448460bc108177, type: 3}
+  _ghostPrefab: {fileID: 6008043463446222512, guid: 74e625893968e604db448460bc108177, type: 3}
   _ghostSpawnPoint: {fileID: 839247414}
 --- !u!4 &412540733
 Transform:
@@ -887,7 +887,7 @@ Transform:
   m_GameObject: {fileID: 839247413}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.92, y: 4.3, z: 0}
+  m_LocalPosition: {x: 18.2, y: 4.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

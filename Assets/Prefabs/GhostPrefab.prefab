@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4892697626909565517}
   - component: {fileID: 8700814974305742063}
   - component: {fileID: 3938209104433253827}
+  - component: {fileID: 5389957348941434661}
   m_Layer: 5
   m_Name: GhostPrefab
   m_TagString: Untagged
@@ -104,3 +105,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b46529e34e94d5241b91806a1eaf4122, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostController
+  _ghostSpeed: 5
+  _offset: {x: -1.5, y: -1}
+--- !u!61 &5389957348941434661
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6008043463446222512}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.18567872, y: 0.12997508}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 10.24, y: 10.24}
+    newSize: {x: 10.24, y: 10.24}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 6.749244, y: 8.420351}
+  m_EdgeRadius: 0
