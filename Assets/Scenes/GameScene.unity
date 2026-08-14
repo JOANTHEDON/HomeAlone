@@ -119,6 +119,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &31245000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 31245002}
+  - component: {fileID: 31245001}
+  m_Layer: 0
+  m_Name: UIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &31245001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31245000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67fb42b5008de924a99a3319d3f085e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIManager
+  _upGradeButton: {fileID: 2709809566529785295, guid: 183e6d8bef509f24f9c354e415dfd325, type: 3}
+  _doorUpgradeSpawnPoint: {fileID: 852810812}
+  _cradleUpgradeSpawnPoint: {fileID: 2042061640}
+  _doorUpgradeLevels: 0a000000140000001e000000
+  _cradleUpgradeLevels: 0f0000001e0000002d000000
+--- !u!4 &31245002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31245000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &116093246
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,6 +520,7 @@ MonoBehaviour:
   _spawnPoint: {fileID: 181700600}
   _targetPoint: {fileID: 1303641196}
   _coinDuration: 0.5
+  _uiManager: {fileID: 31245001}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -959,7 +1009,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -10
   m_MaskInteraction: 0
   m_Sprite: {fileID: 8728658592968986161, guid: 63be377b42ac076489326106703bf6d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1144,7 +1194,7 @@ TilemapRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: -10
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.78, y: 0.92999995, z: 0}
@@ -2459,7 +2509,7 @@ TilemapRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -20
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.78, y: 0.19999999, z: 0}
@@ -7820,3 +7870,4 @@ SceneRoots:
   - {fileID: 412540733}
   - {fileID: 116093247}
   - {fileID: 839247414}
+  - {fileID: 31245002}

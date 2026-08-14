@@ -23,4 +23,6 @@ public class GhostController : MonoBehaviour
         transform.position = Vector2.MoveTowards(currentPos,targetPos, _ghostSpeed * Time.deltaTime);
 
     }
+
+    
 }
