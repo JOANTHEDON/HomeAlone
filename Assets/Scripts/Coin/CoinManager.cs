@@ -12,6 +12,7 @@ public class CoinManager : MonoBehaviour {
     [SerializeField]private UIManager _uiManager;
     
     
+    
     private bool _startCoinSpawn = false;
     public bool StartCoinSpawn {
         get => _startCoinSpawn;
@@ -22,6 +23,8 @@ public class CoinManager : MonoBehaviour {
 
     private int currentCoinCount = 0;
     private CoinScript _coin;
+
+    
 
     public void Start() {
         if (_textUI == null) return;
@@ -50,4 +53,6 @@ public class CoinManager : MonoBehaviour {
         _uiManager.ShowDoorUpgradeButton(currentCoinCount);
         _uiManager.ShowCradleUpgradeButton(currentCoinCount);
     }
+
+    
 }
