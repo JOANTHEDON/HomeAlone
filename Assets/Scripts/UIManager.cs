@@ -13,27 +13,26 @@ public class UIManager : MonoBehaviour
     private bool isDoorupgradeShown= false;
     private bool isCradleUpgradeShown = false;
 
-    public void ShowDoorUpgradeButton(int currentCoinCount, bool isUpgradeShown)
+    public void ShowDoorUpgradeButton(int currentCoinCount)
     {
-        if(_upGradeButton == null)return;
-        isUpgradeShown = isDoorupgradeShown;
-        if(currentCoinCount >= _doorUpgradeLevels[doorCurrentLevel] && !isDoorupgradeShown)
+        if(_upGradeButton == null || isDoorupgradeShown) return;
+        if(currentCoinCount >= _doorUpgradeLevels[0])
         {
             var UpgradePrefab = Instantiate(_upGradeButton, _doorUpgradeSpawnPoint.position, Quaternion.identity);
             doorCurrentLevel++;
-            isDoorupgradeShown = false;
+            isDoorupgradeShown = true;
         }
     }
 
-    public void ShowCradleUpgradeButton(int CurrentCoinCount, bool isUpgradeShown)
+    public void ShowCradleUpgradeButton(int CurrentCoinCount)
     {
-        if(_upGradeButton == null)return;
-        isUpgradeShown = isCradleUpgradeShown;
-        if( CurrentCoinCount >= _cradleUpgradeLevels[cradleCurrentLevel] && !isCradleUpgradeShown)
+        if(_upGradeButton == null || isCradleUpgradeShown)return;
+        if( CurrentCoinCount >= _cradleUpgradeLevels[0])
         {
-            var UpgradePrefab = Instantiate(_upGradeButton, _doorUpgradeSpawnPoint.position, Quaternion.identity);
+            var UpgradePrefab = Instantiate(_upGradeButton, _cradleUpgradeSpawnPoint.position, Quaternion.identity);
             cradleCurrentLevel++;
-            isCradleUpgradeShown = false;
+            isCradleUpgradeShown = true;
+            
         }
     }
 

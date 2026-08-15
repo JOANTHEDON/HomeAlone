@@ -47,7 +47,7 @@ public class CoinManager : MonoBehaviour {
 
     public void Update()
     {
-        _uiManager.ShowDoorUpgradeButton(currentCoinCount, true);
-        _uiManager.ShowCradleUpgradeButton(currentCoinCount, true);
+        _uiManager.ShowDoorUpgradeButton(currentCoinCount);
+        _uiManager.ShowCradleUpgradeButton(currentCoinCount);
     }
 }
