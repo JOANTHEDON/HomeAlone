@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class UIManager : MonoBehaviour
         {
             var UpgradePrefab = Instantiate(_upGradeButton, _doorUpgradeSpawnPoint.position, Quaternion.identity);
             doorCurrentLevel++;
+            AnimateUpgradeButton(UpgradePrefab.transform);
             isDoorupgradeShown = true;
         }
     }
@@ -31,9 +33,18 @@ public class UIManager : MonoBehaviour
         {
             var UpgradePrefab = Instantiate(_upGradeButton, _cradleUpgradeSpawnPoint.position, Quaternion.identity);
             cradleCurrentLevel++;
+            AnimateUpgradeButton(UpgradePrefab.transform);
             isCradleUpgradeShown = true;
             
         }
+    }
+
+    private void AnimateUpgradeButton(Transform buttonTransform)
+    {
+        buttonTransform.localScale = Vector3.one;
+        buttonTransform.DOScale(Vector3.one, 0.25f).SetEase(Ease.OutBack);
+
+        buttonTransform.DOScale(new Vector3(1.08f, 1.08f, 1.08f), 0.45f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine).SetDelay(0.5f);
     }
 
 
