@@ -1478,6 +1478,7 @@ GameObject:
   - component: {fileID: 852810813}
   - component: {fileID: 852810814}
   - component: {fileID: 852810815}
+  - component: {fileID: 852810816}
   m_Layer: 0
   m_Name: Door
   m_TagString: Door
@@ -1573,6 +1574,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorController
   DoorspriteRenderer: {fileID: 852810811}
   DoorClosed: {fileID: 356385122751142501, guid: f9d3837137902fe46a6c0dccae0a1045, type: 3}
+  DoorOpen: {fileID: 8728658592968986161, guid: 63be377b42ac076489326106703bf6d5, type: 3}
+  _doorHealthmanager: {fileID: 852810815}
 --- !u!61 &852810814
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1633,6 +1636,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorHealthManager
   healthBar: {fileID: 240670942}
   maxHealth: 10
+--- !u!208 &852810816
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852810810}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.87500006, y: 1.195, z: 0.87500006}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &990386656
 GameObject:
   m_ObjectHideFlags: 0
@@ -8895,7 +8914,7 @@ GameObject:
   - component: {fileID: 2042061642}
   m_Layer: 0
   m_Name: Cradle
-  m_TagString: Untagged
+  m_TagString: Cradle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

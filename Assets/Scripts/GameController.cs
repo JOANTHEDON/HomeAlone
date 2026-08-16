@@ -19,6 +19,8 @@ public class GameController : MonoBehaviour
     private bool _hasGhostSpawned = false;
     private bool _playerHidden = false;
     private GameObject Player;
+    private bool _gameOver= false;
+    private GhostController _spawnedGhost;
 
     private void Start()
     {
@@ -66,6 +68,21 @@ public class GameController : MonoBehaviour
             DisablePlayer();
             _playerHidden = true;
         }
+
+        if (_spawnedGhost != null && _spawnedGhost.IsGameOver)
+        {
+            _gameOver = true;
+        }
+
+        if (_gameOver)
+        {
+            if (_uiText != null)
+            {
+                _uiText.gameObject.SetActive(true);
+                _uiText.text = "GAME OVER";
+                _coinManager.StopCoinSpawn();
+            }
+        }
     }
 
     private void DisablePlayer()
@@ -77,7 +94,9 @@ public class GameController : MonoBehaviour
     private void SpawnGhost()
     {
         if (_ghostPrefab == null) return;
-        Instantiate(_ghostPrefab, _ghostSpawnPoint.position, Quaternion.identity);
+
+        GameObject ghostInstance = Instantiate(_ghostPrefab, _ghostSpawnPoint.position, Quaternion.identity);
+        _spawnedGhost = ghostInstance.GetComponent<GhostController>();
     }
 
     private void InitializeCameraFollow(Transform target)
