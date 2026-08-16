@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private CoinManager _coinManager;
+    private CoinManager _coinManager;
 
-    public bool isMovementDisabled = false;
+    private bool isMovementDisabled = false;
 
     private PlayerLocomotionInput _playerLocomotionInput;
     private Rigidbody2D _rb;
@@ -13,7 +13,9 @@ public class PlayerController : MonoBehaviour {
 
         _rb = GetComponent<Rigidbody2D>();
         _playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
+        _coinManager = FindAnyObjectByType<CoinManager>();
         if (_coinManager == null) return;
+
     }
 
     private void FixedUpdate() {
@@ -25,9 +27,14 @@ public class PlayerController : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("Door")) {
-            _coinManager.StartCoinSpawn = true;
-            Debug.Log("player colliding with door");
+        if (!collision.CompareTag("Door")) return;
+
+        if (_coinManager == null) {
+            Debug.LogWarning("CoinManager not assigned on PlayerController; cannot start coin spawn.");
+            return;
         }
+
+        _coinManager.StartCoinSpawn = true;
+        Debug.Log("player colliding with door");
     }
 }
