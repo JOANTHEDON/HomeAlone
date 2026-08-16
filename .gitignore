@@ -4,21 +4,26 @@
 [Bb]uild/
 [Bb]uilds/
 [Ll]ogs/
-UserSettings/
-
+[Uu]ser[Ss]ettings/
 MemoryCaptures/
-
 Recordings/
-
-Assets/AssetStoreTools*
-
+Assets/_Recovery/
+.vscode/
 .vs/
 .gradle/
-
+.idea/
+.consulo/
 ExportedObj/
 
-.consulo/
-.idea/
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+Assets/AssetStoreTools*
 
 *.csproj
 *.unityproj
@@ -27,11 +32,6 @@ ExportedObj/
 *.tmp
 *.user
 *.userprefs
-*.pidb
-*.booproj
-*.svd
-*.pdb
-*.mdb
 
 .DS_Store
 Thumbs.db
