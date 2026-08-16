@@ -1477,6 +1477,7 @@ GameObject:
   - component: {fileID: 852810811}
   - component: {fileID: 852810813}
   - component: {fileID: 852810814}
+  - component: {fileID: 852810815}
   m_Layer: 0
   m_Name: Door
   m_TagString: Door
@@ -1618,6 +1619,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.9462638, y: 0.8591461}
   m_EdgeRadius: 0
+--- !u!114 &852810815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852810810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e6dd43624735c1468f569719990cc39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoorHealthManager
+  healthBar: {fileID: 240670942}
+  maxHealth: 10
 --- !u!1 &990386656
 GameObject:
   m_ObjectHideFlags: 0
