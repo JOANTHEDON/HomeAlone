@@ -1,25 +1,36 @@
 using UnityEngine;
 using UnityEngine.UI;
+
 public class DoorHealthManager : MonoBehaviour {
     [SerializeField] private Image healthBar;
-    [SerializeField] private float healthAmount = 100f;
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Return)) {
-            TakeDamage(20);
-        }
-        if (Input.GetKeyDown(KeyCode.Space)) { Heal(20); }
+    [SerializeField] private float maxHealth = 10f;
+
+    private float currentHealth;
+
+    private void Awake() {
+        currentHealth = maxHealth;
+        UpdateHealthBar();
     }
+
     public void TakeDamage(float damage) {
-        healthAmount -= damage;
-        healthBar.fillAmount = healthAmount / 100f;
+        currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        UpdateHealthBar();
+
+        if (currentHealth <= 0) {
+            Debug.Log("Door Destroyed!");
+        }
     }
 
     public void Heal(float healingAmount) {
-        healthAmount += healthAmount;
-        healthAmount = Mathf.Clamp(healthAmount, 0, 100);
-
-        healthBar.fillAmount = healthAmount / 100f;
-
+        currentHealth += healingAmount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        UpdateHealthBar();
     }
 
+    private void UpdateHealthBar() {
+        if (healthBar != null) {
+            healthBar.fillAmount = currentHealth / maxHealth;
+        }
+    }
 }
