@@ -6,19 +6,31 @@ public class DoorHealthManager : MonoBehaviour {
     [SerializeField] private float maxHealth = 10f;
 
     private float currentHealth;
+    private bool _isDoorBroken= false;
+    public bool IsDoorBroken => _isDoorBroken;
 
     private void Awake() {
         currentHealth = maxHealth;
         UpdateHealthBar();
+        _isDoorBroken= false;
     }
 
-    public void TakeDamage(float damage) {
+    public void TakeDamage(float damage)
+    {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
         UpdateHealthBar();
 
-        if (currentHealth <= 0) {
-            Debug.Log("Door Destroyed!");
+        if (currentHealth <= 0)
+        {
+            _isDoorBroken = true;
+
+            DoorController doorController = GetComponentInParent<DoorController>();
+            if (doorController == null)
+                doorController = GetComponentInChildren<DoorController>();
+
+            if (doorController != null)
+                doorController.OpenDoor();
         }
     }
 

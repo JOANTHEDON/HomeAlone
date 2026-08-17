@@ -54,5 +54,10 @@ public class CoinManager : MonoBehaviour {
         _uiManager.ShowCradleUpgradeButton(currentCoinCount);
     }
 
+    public void StopCoinSpawn()
+    {
+        _startCoinSpawn = false;
+    }
+
     
 }
