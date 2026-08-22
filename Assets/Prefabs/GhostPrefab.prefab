@@ -515,7 +515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostHealth
   healthBarImage: {fileID: 9054611043811119087}
-  maxHealth: 20
+  maxHealth: 240
 --- !u!58 &7429905096803117398
 CircleCollider2D:
   m_ObjectHideFlags: 0

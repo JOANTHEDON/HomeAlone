@@ -39,6 +39,20 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public GameObject SpawnTurretUpgradeButton(Vector3 position, UnityEngine.Events.UnityAction onClickAction)
+    {
+        if (_upGradeButton == null) return null;
+        var upgradeButtonInstance = Instantiate(_upGradeButton, position, Quaternion.identity);
+        AnimateUpgradeButton(upgradeButtonInstance.transform);
+        
+        UnityEngine.UI.Button btn = upgradeButtonInstance.GetComponentInChildren<UnityEngine.UI.Button>();
+        if (btn != null)
+        {
+            btn.onClick.AddListener(onClickAction);
+        }
+        return upgradeButtonInstance;
+    }
+
     private void AnimateUpgradeButton(Transform buttonTransform)
     {
         buttonTransform.localScale = Vector3.one;

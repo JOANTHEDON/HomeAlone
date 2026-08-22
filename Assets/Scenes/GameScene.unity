@@ -1093,7 +1093,7 @@ MonoBehaviour:
   _ghostSpawnPoint: {fileID: 839247414}
   Canvas: {fileID: 248619624}
   _uiText: {fileID: 1403880533}
-  _gameStartTime: 25
+  _gameStartTime: 60
 --- !u!4 &412540733
 Transform:
   m_ObjectHideFlags: 0
