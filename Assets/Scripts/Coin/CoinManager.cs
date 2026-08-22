@@ -9,10 +9,10 @@ public class CoinManager : MonoBehaviour {
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private Transform _targetPoint;
     [SerializeField] private float _coinDuration = 0.5f;
-    [SerializeField]private UIManager _uiManager;
-    
-    
-    
+    [SerializeField] private UIManager _uiManager;
+
+
+
     private bool _startCoinSpawn = false;
     public bool StartCoinSpawn {
         get => _startCoinSpawn;
@@ -24,11 +24,11 @@ public class CoinManager : MonoBehaviour {
     private int currentCoinCount = 0;
     private CoinScript _coin;
 
-    
+
 
     public void Start() {
         if (_textUI == null) return;
-        if(_uiManager == null) return;
+        if (_uiManager == null) return;
         _coin = Instantiate(_coinPrefab);
         _coin.gameObject.SetActive(false);
         StartCoroutine(CoinSpawnCoroutine());
@@ -48,16 +48,21 @@ public class CoinManager : MonoBehaviour {
         }
     }
 
-    public void Update()
-    {
+    public void Update() {
         _uiManager.ShowDoorUpgradeButton(currentCoinCount);
         _uiManager.ShowCradleUpgradeButton(currentCoinCount);
     }
 
-    public void StopCoinSpawn()
-    {
+    public void StopCoinSpawn() {
         _startCoinSpawn = false;
     }
+    public bool SpendCoins(int amount) {
+        if (currentCoinCount >= amount) {
+            currentCoinCount -= amount;
+            if (_textUI != null) _textUI.text = currentCoinCount.ToString();
+            return true;
+        }
+        return false;
+    }
 
-    
 }

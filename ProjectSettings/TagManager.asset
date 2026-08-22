@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Door
   - Enemy
+  - Cradle
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ghost
   - Water
   - UI
   - Top
