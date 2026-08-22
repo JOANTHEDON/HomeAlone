@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bace4a80875bb64db89cd504aeb3332, type: 3}
+  m_Name: TurretConfig
+  m_EditorClassIdentifier: Assembly-CSharp::TurretConfig
+  _turretLevelList:
+    TurretLevelInfos:
+    - Level: 1
+      LevelCoinUpgrade: 10
+    - Level: 2
+      LevelCoinUpgrade: 20
+    - Level: 3
+      LevelCoinUpgrade: 30
+    - Level: 4
+      LevelCoinUpgrade: 40
+    - Level: 5
+      LevelCoinUpgrade: 50
+    - Level: 6
+      LevelCoinUpgrade: 60
+    - Level: 7
+      LevelCoinUpgrade: 70
+    - Level: 8
+      LevelCoinUpgrade: 80
+    - Level: 9
+      LevelCoinUpgrade: 90
+    - Level: 10
+      LevelCoinUpgrade: 100
