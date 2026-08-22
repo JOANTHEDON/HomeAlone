@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using TMPro;
 
 public class Turret : MonoBehaviour {
     [Header("Turret Settings")]
@@ -9,6 +10,7 @@ public class Turret : MonoBehaviour {
     [SerializeField] private Transform firePoint;
     [SerializeField] private LayerMask ghostLayer;
     [SerializeField] private TurretConfig _turretConfig;
+    [SerializeField]private TextMeshProUGUI _levelText;
 
     [Header("Upgrade Settings")]
     private int currentLevel = 1;
@@ -16,6 +18,7 @@ public class Turret : MonoBehaviour {
     private GameObject activeUpgradeIcon;
     private CoinManager coinManager;
     private UIManager uiManager;
+
 
     private GhostHealth currentTarget;
     private float fireCooldown = 0f;
@@ -29,6 +32,7 @@ public class Turret : MonoBehaviour {
         if (level1Info != null) {
             ApplyUpgradedStats(level1Info);
         }
+        UpdateLevelText();
     }
 
     private void Update() {
@@ -124,6 +128,7 @@ public class Turret : MonoBehaviour {
         if (coinManager.SpendCoins((int)nextLevelInfo.LevelCoinUpgrade)) {
             currentLevel++;
             ApplyUpgradedStats(nextLevelInfo);
+            UpdateLevelText();
 
             if (activeUpgradeIcon != null) {
                 Destroy(activeUpgradeIcon);
@@ -136,6 +141,12 @@ public class Turret : MonoBehaviour {
         if (levelInfo.FireRate > 0f) fireRate = levelInfo.FireRate;
         if (levelInfo.ProjectileDamage > 0f) projectileDamage = levelInfo.ProjectileDamage;
         Debug.Log($"Turret Upgraded to Level {levelInfo.Level}! Range: {attackRange}, Fire Rate: {fireRate}, Damage: {projectileDamage}");
+    }
+
+    private void UpdateLevelText() {
+        if (_levelText != null) {
+            _levelText.text = $"LEVEL {currentLevel}";
+        }
     }
 
     private void OnDrawGizmosSelected() {

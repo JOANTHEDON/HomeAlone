@@ -12,6 +12,7 @@ public class TileTurretManager : MonoBehaviour {
     [Header("Cost & Managers")]
     [SerializeField] private int turretCost = 8;
     [SerializeField] private CoinManager coinManager;
+    [SerializeField] private TurretConfig turretConfig;
 
     [Header("Fixed UI Settings")]
     [SerializeField] private GameObject turretUIButton;
@@ -24,6 +25,19 @@ public class TileTurretManager : MonoBehaviour {
     private void Start() {
         if (turretUIButton != null)
             turretUIButton.SetActive(false);
+
+        UpdateTurretCostFromConfig();
+    }
+
+    private void UpdateTurretCostFromConfig() {
+        if (turretConfig != null && turretConfig._turretLevelList != null) {
+            foreach (var info in turretConfig._turretLevelList.TurretLevelInfos) {
+                if (info.Level == 1) {
+                    turretCost = (int)info.LevelCoinUpgrade;
+                    break;
+                }
+            }
+        }
     }
 
     private void Update() {

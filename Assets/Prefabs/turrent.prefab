@@ -114,6 +114,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   _turretConfig: {fileID: 11400000, guid: e6a44429b0665aa44b4aebe6ba9e0535, type: 2}
+  _levelText: {fileID: 5646919261301561591}
 --- !u!1 &5535638627433781641
 GameObject:
   m_ObjectHideFlags: 0
