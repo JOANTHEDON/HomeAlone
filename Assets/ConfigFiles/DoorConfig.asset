@@ -16,21 +16,41 @@ MonoBehaviour:
     _doorLevelInfo:
     - level: 1
       doorHealth: 10
+      LevelCoinUpgrade: 0
+      LevelIncreaseCost: 0
     - level: 2
       doorHealth: 15
+      LevelCoinUpgrade: 10
+      LevelIncreaseCost: 0
     - level: 3
       doorHealth: 20
+      LevelCoinUpgrade: 20
+      LevelIncreaseCost: 0
     - level: 4
       doorHealth: 25
+      LevelCoinUpgrade: 30
+      LevelIncreaseCost: 0
     - level: 5
       doorHealth: 30
+      LevelCoinUpgrade: 40
+      LevelIncreaseCost: 0
     - level: 6
       doorHealth: 35
+      LevelCoinUpgrade: 50
+      LevelIncreaseCost: 0
     - level: 7
       doorHealth: 40
+      LevelCoinUpgrade: 60
+      LevelIncreaseCost: 0
     - level: 8
       doorHealth: 45
+      LevelCoinUpgrade: 70
+      LevelIncreaseCost: 0
     - level: 9
       doorHealth: 50
+      LevelCoinUpgrade: 80
+      LevelIncreaseCost: 0
     - level: 10
       doorHealth: 55
+      LevelCoinUpgrade: 90
+      LevelIncreaseCost: 0

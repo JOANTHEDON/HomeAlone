@@ -266,8 +266,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1163,6 +1163,8 @@ MonoBehaviour:
   _targetPoint: {fileID: 1303641196}
   _coinDuration: 0.5
   _uiManager: {fileID: 31245001}
+  cradleConfig: {fileID: 11400000, guid: e147ea9d9885e224eacfa17a53c45ed5, type: 2}
+  _cradleLevelText: {fileID: 1527646301}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -9016,8 +9018,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

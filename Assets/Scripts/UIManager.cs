@@ -7,14 +7,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]private GameObject _upGradeButton;
     [SerializeField]private Transform _doorUpgradeSpawnPoint;
     [SerializeField]private Transform _cradleUpgradeSpawnPoint;
-    [SerializeField]private int[] _doorUpgradeLevels;
-    [SerializeField]private int[] _cradleUpgradeLevels;
     private int doorCurrentLevel = 1;
-    private int cradleCurrentLevel = 0;
+    private int cradleCurrentLevel = 1;
     private bool isDoorupgradeShown = false;
     private bool isCradleUpgradeShown = false;
 
     private GameObject activeDoorUpgradeIcon;
+    private GameObject activeCradleUpgradeIcon;
     private DoorHealthManager doorHealthManager;
 
     private void Start()
@@ -25,9 +24,13 @@ public class UIManager : MonoBehaviour
     public void ShowDoorUpgradeButton(int currentCoinCount)
     {
         if (_upGradeButton == null || doorHealthManager == null) return;
-        if (doorCurrentLevel > _doorUpgradeLevels.Length) return;
 
-        int nextLevelCost = _doorUpgradeLevels[doorCurrentLevel - 1];
+        int nextLevelCost = doorHealthManager.GetUpgradeCost(doorCurrentLevel + 1);
+        if (nextLevelCost == -1) // Max level reached
+        {
+            if (activeDoorUpgradeIcon != null) Destroy(activeDoorUpgradeIcon);
+            return;
+        }
 
         if (currentCoinCount >= nextLevelCost && !isDoorupgradeShown)
         {
@@ -51,11 +54,12 @@ public class UIManager : MonoBehaviour
 
     private void UpgradeDoor()
     {
-        if (doorCurrentLevel > _doorUpgradeLevels.Length || doorHealthManager == null) return;
+        if (doorHealthManager == null) return;
 
-        int cost = _doorUpgradeLevels[doorCurrentLevel - 1];
+        int cost = doorHealthManager.GetUpgradeCost(doorCurrentLevel + 1);
+        if (cost == -1) return;
+
         CoinManager coinManager = FindAnyObjectByType<CoinManager>();
-
         if (coinManager != null && coinManager.SpendCoins(cost))
         {
             doorCurrentLevel++;
@@ -69,16 +73,58 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShowCradleUpgradeButton(int CurrentCoinCount)
+    public void ShowCradleUpgradeButton(int currentCoinCount)
     {
-        if(_upGradeButton == null || isCradleUpgradeShown)return;
-        if( CurrentCoinCount >= _cradleUpgradeLevels[0])
+        if (_upGradeButton == null) return;
+
+        CoinManager coinManager = FindAnyObjectByType<CoinManager>();
+        if (coinManager == null) return;
+
+        int nextLevelCost = coinManager.GetCradleUpgradeCost(cradleCurrentLevel + 1);
+        if (nextLevelCost == -1) // Max level reached
         {
-            var UpgradePrefab = Instantiate(_upGradeButton, _cradleUpgradeSpawnPoint.position, Quaternion.identity);
-            cradleCurrentLevel++;
-            AnimateUpgradeButton(UpgradePrefab.transform);
+            if (activeCradleUpgradeIcon != null) Destroy(activeCradleUpgradeIcon);
+            return;
+        }
+
+        if (currentCoinCount >= nextLevelCost && !isCradleUpgradeShown)
+        {
+            activeCradleUpgradeIcon = Instantiate(_upGradeButton, _cradleUpgradeSpawnPoint.position, Quaternion.identity);
+            AnimateUpgradeButton(activeCradleUpgradeIcon.transform);
+
+            UnityEngine.UI.Button btn = activeCradleUpgradeIcon.GetComponentInChildren<UnityEngine.UI.Button>();
+            if (btn != null)
+            {
+                btn.onClick.AddListener(UpgradeCradle);
+            }
+
             isCradleUpgradeShown = true;
-            
+        }
+        else if (currentCoinCount < nextLevelCost && isCradleUpgradeShown)
+        {
+            if (activeCradleUpgradeIcon != null) Destroy(activeCradleUpgradeIcon);
+            isCradleUpgradeShown = false;
+        }
+    }
+
+    private void UpgradeCradle()
+    {
+        CoinManager coinManager = FindAnyObjectByType<CoinManager>();
+        if (coinManager == null) return;
+
+        int cost = coinManager.GetCradleUpgradeCost(cradleCurrentLevel + 1);
+        if (cost == -1) return;
+
+        if (coinManager.SpendCoins(cost))
+        {
+            cradleCurrentLevel++;
+            coinManager.UpgradeCradle(cradleCurrentLevel);
+
+            if (activeCradleUpgradeIcon != null)
+            {
+                Destroy(activeCradleUpgradeIcon);
+            }
+            isCradleUpgradeShown = false;
         }
     }
 

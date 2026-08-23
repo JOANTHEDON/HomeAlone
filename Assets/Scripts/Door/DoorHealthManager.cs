@@ -96,4 +96,9 @@ public class DoorHealthManager : MonoBehaviour {
             healthBar.fillAmount = currentHealth / maxHealth;
         }
     }
+
+    public int GetUpgradeCost(int targetLevel) {
+        DoorLevelInfo info = GetLevelInfo(targetLevel);
+        return info != null ? (int)info.LevelCoinUpgrade : -1;
+    }
 }

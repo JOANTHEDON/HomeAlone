@@ -6,6 +6,8 @@ public class DoorLevelInfo
 {
     public int level;
     public int doorHealth;
+    public float LevelCoinUpgrade;
+    
 }
 
 [Serializable]
