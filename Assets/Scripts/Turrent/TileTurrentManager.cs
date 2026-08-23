@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
+using UnityEngine.InputSystem;
 
 public class TileTurretManager : MonoBehaviour {
     [Header("Grid & Prefab Settings")]
@@ -41,14 +42,15 @@ public class TileTurretManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetMouseButtonDown(0)) {
+        if (Pointer.current != null && Pointer.current.press.wasPressedThisFrame) {
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()) return;
             SelectTileUnderMouse();
         }
     }
 
     private void SelectTileUnderMouse() {
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 pointerPosition = Pointer.current != null ? Pointer.current.position.ReadValue() : Vector2.zero;
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(pointerPosition);
         mouseWorldPos.z = 0;
 
         Vector3Int cellPos = grid.WorldToCell(mouseWorldPos);

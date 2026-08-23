@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
-        if (!collision.CompareTag("Door")) return;
+        if (!collision.CompareTag("Cradle")) return;
 
         if (_coinManager == null) {
             Debug.LogWarning("CoinManager not assigned on PlayerController; cannot start coin spawn.");
@@ -35,6 +35,6 @@ public class PlayerController : MonoBehaviour {
         }
 
         _coinManager.StartCoinSpawn = true;
-        Debug.Log("player colliding with door");
+        Debug.Log("player colliding with cradle");
     }
 }

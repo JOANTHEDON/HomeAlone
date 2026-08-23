@@ -7,7 +7,7 @@ public class GhostController : MonoBehaviour {
     [SerializeField] private float _attackInterval = 1.0f;  // Attack once per second
     [SerializeField] private float _damagePerAttack = 1.0f; // 1 health point per attack
     [Header("Heal & Retreat Settings")]
-    [SerializeField] private float _healThreshold = 60f;        // Retreat when health falls between 30 and 60 (or <= 60)
+    [SerializeField] private float _healThreshold = 30f;        // Retreat when health falls between 30 and 60 (or <= 60)
     [SerializeField] private float _healRatePercentPerSecond = 0.10f; // 10% per second
     [SerializeField] private GameObject _healLocation;         // Location to retreat to for healing (GameObject or Transform)
 
