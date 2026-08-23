@@ -10,6 +10,10 @@ public class GhostHealth : MonoBehaviour {
 
     private float currentHealth;
 
+    public float CurrentHealth => currentHealth;
+    public float MaxHealth => maxHealth;
+    public float HealthPercentage => maxHealth > 0 ? currentHealth / maxHealth : 0f;
+
     private void Awake() {
         currentHealth = maxHealth;
         UpdateHealthBar();
@@ -25,6 +29,12 @@ public class GhostHealth : MonoBehaviour {
         if (currentHealth <= 0) {
             Die();
         }
+    }
+
+    public void Heal(float healAmount) {
+        currentHealth += healAmount;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
+        UpdateHealthBar();
     }
 
     private void UpdateHealthBar() {
