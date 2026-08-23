@@ -434,6 +434,9 @@ MonoBehaviour:
   _attackRange: 3
   _attackInterval: 1
   _damagePerAttack: 1
+  _healThreshold: 60
+  _healRatePercentPerSecond: 0.1
+  _healLocation: {fileID: 0}
 --- !u!61 &5389957348941434661
 BoxCollider2D:
   m_ObjectHideFlags: 0
