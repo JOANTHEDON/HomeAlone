@@ -33,6 +33,10 @@ public class TurrentProjectile : MonoBehaviour {
         target = targetTransform;
     }
 
+    public void SetDamage(float newDamage) {
+        damage = newDamage;
+    }
+
     private void Update() {
         if (target == null) {
             Destroy(gameObject);

@@ -10,8 +10,8 @@ public class CoinManager : MonoBehaviour {
     [SerializeField] private Transform _targetPoint;
     [SerializeField] private float _coinDuration = 0.5f;
     [SerializeField] private UIManager _uiManager;
-
-
+    [SerializeField] private CradleConfig cradleConfig;
+    [SerializeField] private TextMeshProUGUI _cradleLevelText;
 
     private bool _startCoinSpawn = false;
     public bool StartCoinSpawn {
@@ -23,14 +23,15 @@ public class CoinManager : MonoBehaviour {
 
     private int currentCoinCount = 0;
     private CoinScript _coin;
-
-
+    private int cradleCurrentLevel = 1;
 
     public void Start() {
         if (_textUI == null) return;
         if (_uiManager == null) return;
         _coin = Instantiate(_coinPrefab);
         _coin.gameObject.SetActive(false);
+        UpdateSpawnTimeFromConfig();
+        UpdateCradleLevelText();
         StartCoroutine(CoinSpawnCoroutine());
     }
 
@@ -65,4 +66,40 @@ public class CoinManager : MonoBehaviour {
         return false;
     }
 
+    public void UpgradeCradle(int newLevel) {
+        cradleCurrentLevel = newLevel;
+        UpdateSpawnTimeFromConfig();
+        UpdateCradleLevelText();
+    }
+
+    private void UpdateSpawnTimeFromConfig() {
+        if (cradleConfig != null && cradleConfig._cradleLevelList != null) {
+            CradleLevelInfo levelInfo = GetCradleLevelInfo(cradleCurrentLevel);
+            if (levelInfo != null) {
+                _coinSpawnTime = levelInfo.CoinSpawnRate;
+                Debug.Log($"Cradle Upgraded to Level {cradleCurrentLevel}! Coin Spawn Time is now: {_coinSpawnTime}s");
+            }
+        }
+    }
+
+    private CradleLevelInfo GetCradleLevelInfo(int level) {
+        if (cradleConfig == null || cradleConfig._cradleLevelList == null) return null;
+        if (cradleConfig._cradleLevelList._cradleLevelInfo != null) {
+            foreach (var info in cradleConfig._cradleLevelList._cradleLevelInfo) {
+                if (info.Level == level) return info;
+            }
+        }
+        return null;
+    }
+
+    private void UpdateCradleLevelText() {
+        if (_cradleLevelText != null) {
+            _cradleLevelText.text = $"LEVEL {cradleCurrentLevel}";
+        }
+    }
+
+    public int GetCradleUpgradeCost(int targetLevel) {
+        CradleLevelInfo info = GetCradleLevelInfo(targetLevel);
+        return info != null ? (int)info.LevelCoinUpgrade : -1;
+    }
 }
