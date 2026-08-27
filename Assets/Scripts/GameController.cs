@@ -67,6 +67,17 @@ public class GameController : MonoBehaviour
         {
             DisablePlayer();
             _playerHidden = true;
+
+            if (_cameraFollow != null)
+            {
+                _cameraFollow.EnablePan(true);
+            }
+
+            UIManager uiManager = FindAnyObjectByType<UIManager>();
+            if (uiManager != null)
+            {
+                uiManager.ShowZoomUIPanel(true);
+            }
         }
 
         if (_spawnedGhost != null && _spawnedGhost.IsGameOver)
