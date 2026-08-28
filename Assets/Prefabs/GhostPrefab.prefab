@@ -434,6 +434,9 @@ MonoBehaviour:
   _attackRange: 3
   _attackInterval: 1
   _damagePerAttack: 1
+  _healThreshold: 100
+  _healRatePercentPerSecond: 0.1
+  _healLocation: {fileID: 0}
 --- !u!61 &5389957348941434661
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -515,7 +518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GhostHealth
   healthBarImage: {fileID: 9054611043811119087}
-  maxHealth: 240
+  maxHealth: 360
 --- !u!58 &7429905096803117398
 CircleCollider2D:
   m_ObjectHideFlags: 0

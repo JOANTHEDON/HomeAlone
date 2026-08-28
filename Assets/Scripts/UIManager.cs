@@ -152,9 +152,15 @@ public class UIManager : MonoBehaviour
         }
 
         buttonTransform.localScale = Vector3.one;
-        buttonTransform.DOScale(Vector3.one, 0.25f).SetEase(Ease.OutBack);
+        buttonTransform.DOScale(Vector3.one, 0.25f)
+            .SetEase(Ease.OutBack)
+            .SetTarget(buttonTransform);
 
-        buttonTransform.DOScale(new Vector3(1.08f, 1.08f, 1.08f), 0.45f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine).SetDelay(0.5f);
+        buttonTransform.DOScale(new Vector3(1.08f, 1.08f, 1.08f), 0.45f)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetEase(Ease.InOutSine)
+            .SetDelay(0.5f)
+            .SetTarget(buttonTransform);
     }
 
 
