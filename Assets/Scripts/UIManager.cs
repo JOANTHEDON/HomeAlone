@@ -17,6 +17,10 @@ public class UIManager : MonoBehaviour
     private GameObject activeCradleUpgradeIcon;
     private DoorHealthManager doorHealthManager;
 
+    private bool _upgradeDoor = false;
+    private bool _upgradeCradle= false;
+    private bool _upgradeTurret= false;
+
     private void Awake()
     {
         _upgradePopUpUI.gameObject.SetActive(false);
@@ -42,11 +46,13 @@ public class UIManager : MonoBehaviour
         {
             activeDoorUpgradeIcon = Instantiate(_upGradeButton, _doorUpgradeSpawnPoint.position, Quaternion.identity);
             AnimateUpgradeButton(activeDoorUpgradeIcon.transform);
+            _upgradeDoor = true;
 
             UnityEngine.UI.Button btn = activeDoorUpgradeIcon.GetComponentInChildren<UnityEngine.UI.Button>();
             if (btn != null)
             {
-                btn.onClick.AddListener(UpgradeDoor);
+                btn.onClick.AddListener(DoorUpgradePopUp);
+                //_upgradePopUpUI.SetActive(true);
             }
 
             isDoorupgradeShown = true;
@@ -56,6 +62,12 @@ public class UIManager : MonoBehaviour
             if (activeDoorUpgradeIcon != null) Destroy(activeDoorUpgradeIcon);
             isDoorupgradeShown = false;
         }
+    }
+
+    private void DoorUpgradePopUp()
+    {
+        _upgradeDoor = true;
+        _upgradePopUpUI.SetActive(true);
     }
 
     private void UpgradeDoor()
@@ -171,12 +183,28 @@ public class UIManager : MonoBehaviour
 
     public void OnYesButtonClicked()
     {
+        if (_upgradeDoor)
+        {
+            UpgradeDoor();
+            _upgradeDoor = false;
+        }
+
+        if (_upgradeCradle)
+        {
+            
+        }
+        if (_upgradeTurret)
+        {
+            
+        }
+        
         _upgradePopUpUI.SetActive(false);
 
     }
 
     public void OnNoButtonClicked()
     {
+        _upgradeDoor = false;
         _upgradePopUpUI.SetActive(false);
     }
 
