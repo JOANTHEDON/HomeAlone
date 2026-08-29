@@ -47,6 +47,11 @@ public class UIManager : MonoBehaviour
         {
             activeDoorUpgradeIcon = Instantiate(_upGradeButton, _doorUpgradeSpawnPoint.position, Quaternion.identity);
             AnimateUpgradeButton(activeDoorUpgradeIcon.transform);
+            UpgradeScript upgradeScript = activeDoorUpgradeIcon.GetComponent<UpgradeScript>();
+            if (upgradeScript != null)
+            {
+                upgradeScript.ShowUpgradeCost(nextLevelCost);
+            }
             UnityEngine.UI.Button btn = activeDoorUpgradeIcon.GetComponentInChildren<UnityEngine.UI.Button>();
             if (btn != null)
             {
@@ -102,6 +107,12 @@ public class UIManager : MonoBehaviour
             activeCradleUpgradeIcon = Instantiate(_upGradeButton, _cradleUpgradeSpawnPoint.position, Quaternion.identity);
             AnimateUpgradeButton(activeCradleUpgradeIcon.transform);
 
+
+            UpgradeScript upgradeScript = activeCradleUpgradeIcon.GetComponent<UpgradeScript>();
+                if (upgradeScript != null)
+                {
+                    upgradeScript.ShowUpgradeCost(nextLevelCost);
+                }
             UnityEngine.UI.Button btn = activeCradleUpgradeIcon.GetComponentInChildren<UnityEngine.UI.Button>();
             if (btn != null)
             {
@@ -138,11 +149,18 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public GameObject SpawnTurretUpgradeButton(Vector3 position, UnityEngine.Events.UnityAction onClickAction)
+    public GameObject SpawnTurretUpgradeButton(Vector3 position, int cost, UnityEngine.Events.UnityAction onClickAction)
     {
         if (_upGradeButton == null) return null;
         var upgradeButtonInstance = Instantiate(_upGradeButton, position, Quaternion.identity);
         AnimateUpgradeButton(upgradeButtonInstance.transform);
+        
+        // Add this block:
+        UpgradeScript upgradeScript = upgradeButtonInstance.GetComponent<UpgradeScript>();
+        if (upgradeScript != null)
+        {
+            upgradeScript.ShowUpgradeCost(cost);
+        }
         
         UnityEngine.UI.Button btn = upgradeButtonInstance.GetComponentInChildren<UnityEngine.UI.Button>();
         if (btn != null)
