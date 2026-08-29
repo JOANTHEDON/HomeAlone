@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class CoinScript : MonoBehaviour {
@@ -5,6 +6,12 @@ public class CoinScript : MonoBehaviour {
     private float _transitionTime;
     private float _elapsedTime = 0f;
     private bool _isMoving = false;
+    [SerializeField]private TextMeshProUGUI _coinText;
+
+    void Start()
+    {
+        _coinText.text = "+1";
+    }
 
 
     void Update() {
@@ -30,5 +37,10 @@ public class CoinScript : MonoBehaviour {
             _isMoving = false;
             gameObject.SetActive(false);
         }
+    }
+
+    public void UpdateCoinText(int CurrentSpawnRate)
+    {
+        _coinText.text = $"+{CurrentSpawnRate}";
     }
 }

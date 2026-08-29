@@ -15,32 +15,32 @@ MonoBehaviour:
   _cradleLevelList:
     _cradleLevelInfo:
     - Level: 1
-      CoinSpawnRate: 1.2
+      CoinSpawnCount: 1
       LevelCoinUpgrade: 0
     - Level: 2
-      CoinSpawnRate: 1.1
+      CoinSpawnCount: 2
       LevelCoinUpgrade: 10
     - Level: 3
-      CoinSpawnRate: 1
+      CoinSpawnCount: 3
       LevelCoinUpgrade: 20
     - Level: 4
-      CoinSpawnRate: 0.9
+      CoinSpawnCount: 4
       LevelCoinUpgrade: 30
     - Level: 5
-      CoinSpawnRate: 0.8
+      CoinSpawnCount: 5
       LevelCoinUpgrade: 40
     - Level: 6
-      CoinSpawnRate: 0.7
+      CoinSpawnCount: 6
       LevelCoinUpgrade: 50
     - Level: 7
-      CoinSpawnRate: 0.6
+      CoinSpawnCount: 7
       LevelCoinUpgrade: 60
     - Level: 8
-      CoinSpawnRate: 0.5
+      CoinSpawnCount: 8
       LevelCoinUpgrade: 70
     - Level: 9
-      CoinSpawnRate: 0.4
+      CoinSpawnCount: 9
       LevelCoinUpgrade: 80
     - Level: 10
-      CoinSpawnRate: 0.3
+      CoinSpawnCount: 10
       LevelCoinUpgrade: 90

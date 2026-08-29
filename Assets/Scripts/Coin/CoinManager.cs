@@ -5,6 +5,7 @@ using UnityEngine;
 public class CoinManager : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI _textUI;
     [SerializeField] private float _coinSpawnTime = 1f;
+    [SerializeField] private int _coinSpawnCount = 1;  
     [SerializeField] private CoinScript _coinPrefab;
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private Transform _targetPoint;
@@ -40,8 +41,9 @@ public class CoinManager : MonoBehaviour {
             if (_startCoinSpawn) {
                 yield return new WaitForSeconds(_coinSpawnTime);
                 _coin.Initialize(_spawnPoint.position, _targetPoint.position, _coinDuration);
-                currentCoinCount++;
+                currentCoinCount += _coinSpawnCount;
                 _textUI.text = currentCoinCount.ToString();
+                _coin.UpdateCoinText(_coinSpawnCount);
                 Debug.Log("coin increased");
             } else {
                 yield return null;
@@ -76,7 +78,7 @@ public class CoinManager : MonoBehaviour {
         if (cradleConfig != null && cradleConfig._cradleLevelList != null) {
             CradleLevelInfo levelInfo = GetCradleLevelInfo(cradleCurrentLevel);
             if (levelInfo != null) {
-                _coinSpawnTime = levelInfo.CoinSpawnRate;
+                _coinSpawnCount = levelInfo.CoinSpawnCount;
                 Debug.Log($"Cradle Upgraded to Level {cradleCurrentLevel}! Coin Spawn Time is now: {_coinSpawnTime}s");
             }
         }
