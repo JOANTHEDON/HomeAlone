@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]private GameObject _upGradeButton;
     [SerializeField]private Transform _doorUpgradeSpawnPoint;
     [SerializeField]private Transform _cradleUpgradeSpawnPoint;
+    [SerializeField]private GameObject _upgradePopUpUI;
     private int doorCurrentLevel = 1;
     private int cradleCurrentLevel = 1;
     private bool isDoorupgradeShown = false;
@@ -15,6 +16,11 @@ public class UIManager : MonoBehaviour
     private GameObject activeDoorUpgradeIcon;
     private GameObject activeCradleUpgradeIcon;
     private DoorHealthManager doorHealthManager;
+
+    private void Awake()
+    {
+        _upgradePopUpUI.gameObject.SetActive(false);
+    }
 
     private void Start()
     {
@@ -161,6 +167,17 @@ public class UIManager : MonoBehaviour
             .SetEase(Ease.InOutSine)
             .SetDelay(0.5f)
             .SetTarget(buttonTransform);
+    }
+
+    public void OnYesButtonClicked()
+    {
+        _upgradePopUpUI.SetActive(false);
+
+    }
+
+    public void OnNoButtonClicked()
+    {
+        _upgradePopUpUI.SetActive(false);
     }
 
 
