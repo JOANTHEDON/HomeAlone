@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]private GameObject _upGradeButton;
     [SerializeField]private Transform _doorUpgradeSpawnPoint;
     [SerializeField]private Transform _cradleUpgradeSpawnPoint;
+    [SerializeField]private GameObject _upgradePopUpUI;
     private int doorCurrentLevel = 1;
     private int cradleCurrentLevel = 1;
     private bool isDoorupgradeShown = false;
@@ -15,6 +16,16 @@ public class UIManager : MonoBehaviour
     private GameObject activeDoorUpgradeIcon;
     private GameObject activeCradleUpgradeIcon;
     private DoorHealthManager doorHealthManager;
+
+    private bool _upgradeDoor = false;
+    private bool _upgradeCradle= false;
+    private bool _upgradeTurret= false;
+    private UnityEngine.Events.UnityAction _activeTurretUpgradeAction;
+
+    private void Awake()
+    {
+        _upgradePopUpUI.gameObject.SetActive(false);
+    }
 
     private void Start()
     {
@@ -36,11 +47,15 @@ public class UIManager : MonoBehaviour
         {
             activeDoorUpgradeIcon = Instantiate(_upGradeButton, _doorUpgradeSpawnPoint.position, Quaternion.identity);
             AnimateUpgradeButton(activeDoorUpgradeIcon.transform);
-
+            UpgradeScript upgradeScript = activeDoorUpgradeIcon.GetComponent<UpgradeScript>();
+            if (upgradeScript != null)
+            {
+                upgradeScript.ShowUpgradeCost(nextLevelCost);
+            }
             UnityEngine.UI.Button btn = activeDoorUpgradeIcon.GetComponentInChildren<UnityEngine.UI.Button>();
             if (btn != null)
             {
-                btn.onClick.AddListener(UpgradeDoor);
+                btn.onClick.AddListener(OpenDoorUpgradePopUp);
             }
 
             isDoorupgradeShown = true;
@@ -92,10 +107,16 @@ public class UIManager : MonoBehaviour
             activeCradleUpgradeIcon = Instantiate(_upGradeButton, _cradleUpgradeSpawnPoint.position, Quaternion.identity);
             AnimateUpgradeButton(activeCradleUpgradeIcon.transform);
 
+
+            UpgradeScript upgradeScript = activeCradleUpgradeIcon.GetComponent<UpgradeScript>();
+                if (upgradeScript != null)
+                {
+                    upgradeScript.ShowUpgradeCost(nextLevelCost);
+                }
             UnityEngine.UI.Button btn = activeCradleUpgradeIcon.GetComponentInChildren<UnityEngine.UI.Button>();
             if (btn != null)
             {
-                btn.onClick.AddListener(UpgradeCradle);
+                btn.onClick.AddListener(OpenCradleUpgradePopUp);
             }
 
             isCradleUpgradeShown = true;
@@ -128,16 +149,23 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public GameObject SpawnTurretUpgradeButton(Vector3 position, UnityEngine.Events.UnityAction onClickAction)
+    public GameObject SpawnTurretUpgradeButton(Vector3 position, int cost, UnityEngine.Events.UnityAction onClickAction)
     {
         if (_upGradeButton == null) return null;
         var upgradeButtonInstance = Instantiate(_upGradeButton, position, Quaternion.identity);
         AnimateUpgradeButton(upgradeButtonInstance.transform);
         
+        // Add this block:
+        UpgradeScript upgradeScript = upgradeButtonInstance.GetComponent<UpgradeScript>();
+        if (upgradeScript != null)
+        {
+            upgradeScript.ShowUpgradeCost(cost);
+        }
+        
         UnityEngine.UI.Button btn = upgradeButtonInstance.GetComponentInChildren<UnityEngine.UI.Button>();
         if (btn != null)
         {
-            btn.onClick.AddListener(onClickAction);
+            btn.onClick.AddListener(() => OpenTurretUpgradePopUp(onClickAction));
         }
         return upgradeButtonInstance;
     }
@@ -163,5 +191,53 @@ public class UIManager : MonoBehaviour
             .SetTarget(buttonTransform);
     }
 
+    private void OpenDoorUpgradePopUp()
+    {
+        _upgradeDoor = true;
+        _upgradePopUpUI.SetActive(true);
+    }
 
+    private void OpenCradleUpgradePopUp()
+    {
+        _upgradeCradle = true;
+        _upgradePopUpUI.SetActive(true);
+    }
+
+    private void OpenTurretUpgradePopUp(UnityEngine.Events.UnityAction confirmAction)
+    {
+        _activeTurretUpgradeAction = confirmAction;
+        _upgradeTurret = true;
+        _upgradePopUpUI.SetActive(true);
+    }
+
+    public void OnYesButtonClicked()
+    {
+        if (_upgradeDoor)
+        {
+            UpgradeDoor();
+            _upgradeDoor = false;
+        }
+        else if (_upgradeCradle)
+        {
+            UpgradeCradle();
+            _upgradeCradle = false;
+        }
+        else if (_upgradeTurret)
+        {
+            _activeTurretUpgradeAction?.Invoke();
+            _activeTurretUpgradeAction = null;
+            _upgradeTurret = false;
+        }
+        
+        _upgradePopUpUI.SetActive(false);
+    }
+
+    public void OnNoButtonClicked()
+    {
+        _upgradeDoor = false;
+        _upgradeCradle = false;
+        _upgradeTurret = false;
+        _activeTurretUpgradeAction = null;
+        _upgradePopUpUI.SetActive(false);
+    }
 }

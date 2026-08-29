@@ -5,7 +5,7 @@ using System;
 public class CradleLevelInfo
 {
     public int Level;
-    public float CoinSpawnRate;
+    public int CoinSpawnCount;
     public float LevelCoinUpgrade;
    
 }

@@ -101,7 +101,7 @@ public class Turret : MonoBehaviour {
         bool canAfford = coinManager.CurrentCoinCount >= nextLevelInfo.LevelCoinUpgrade;
 
         if (canAfford && activeUpgradeIcon == null) {
-            activeUpgradeIcon = uiManager.SpawnTurretUpgradeButton(transform.position, UpgradeTurret);
+            activeUpgradeIcon = uiManager.SpawnTurretUpgradeButton(transform.position,(int)nextLevelInfo.LevelCoinUpgrade, UpgradeTurret);
         } else if (!canAfford && activeUpgradeIcon != null) {
             Destroy(activeUpgradeIcon);
         }

@@ -344,3 +344,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62905c32ab601774d8e35ca65afba4e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinScript
+  _coinText: {fileID: 5814928272847852689}
