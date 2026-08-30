@@ -25,16 +25,4 @@ public class PlayerController : MonoBehaviour {
         }
         _rb.linearVelocity = _playerLocomotionInput.MovementInput * moveSpeed;
     }
-
-    void OnTriggerEnter2D(Collider2D collision) {
-        if (!collision.CompareTag("Cradle")) return;
-
-        if (_coinManager == null) {
-            Debug.LogWarning("CoinManager not assigned on PlayerController; cannot start coin spawn.");
-            return;
-        }
-
-        _coinManager.StartCoinSpawn = true;
-        Debug.Log("player colliding with cradle");
-    }
 }
