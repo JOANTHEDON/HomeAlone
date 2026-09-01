@@ -10372,7 +10372,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1875767938
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10630,7 +10630,7 @@ MonoBehaviour:
   _cradleSpriteRenderer: {fileID: 2042061639}
   _closedCradleSprite: {fileID: 21300000, guid: ca98771c7903fac4db88f1e83211e54b, type: 3}
   _doorController: {fileID: 0}
-  _sleepButton: {fileID: 0}
+  _sleepButton: {fileID: 1875767937}
 --- !u!1 &2084114862
 GameObject:
   m_ObjectHideFlags: 0
