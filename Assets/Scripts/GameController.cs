@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
     private bool _gameOver= false;
     private GhostController _spawnedGhost;
     private PlayerController _playerController;
+    private UIManager _uiManager;
     
 
     private void Start()
@@ -78,10 +79,11 @@ public class GameController : MonoBehaviour
             //     _cameraFollow.EnablePan(true);
             // }
 
-            UIManager uiManager = FindAnyObjectByType<UIManager>();
-            if (uiManager != null)
+            _uiManager = FindAnyObjectByType<UIManager>();
+            if (_uiManager != null)
             {
-                uiManager.ShowZoomUIPanel(true);
+                _uiManager.ShowZoomUIPanel(true);
+                _uiManager.EnableLocationBtn();
             }
         }
 
@@ -127,5 +129,10 @@ public class GameController : MonoBehaviour
         }
 
         _cameraFollow.SetTarget(target);
+    }
+
+    public void RelocatePlayer()
+    {
+        Player.transform.position = _cradleController.transform.position;
     }
 }

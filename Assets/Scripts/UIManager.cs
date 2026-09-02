@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]private GameObject _zoomUIPanel;
     [SerializeField]private UnityEngine.UI.Slider _zoomSlider;
     [SerializeField]private CameraFollow _cameraFollow;
+    [SerializeField]private GameObject _locationButton;
 
     private int doorCurrentLevel = 1;
     private int cradleCurrentLevel = 1;
@@ -20,17 +21,26 @@ public class UIManager : MonoBehaviour
     private GameObject activeDoorUpgradeIcon;
     private GameObject activeCradleUpgradeIcon;
     private DoorHealthManager doorHealthManager;
+    
+
 
     private void Start()
     {
         doorHealthManager = FindAnyObjectByType<DoorHealthManager>();
         if (_cameraFollow == null) _cameraFollow = FindAnyObjectByType<CameraFollow>();
         if (_zoomUIPanel != null) _zoomUIPanel.SetActive(false);
+        if(_locationButton != null) _locationButton.SetActive(false);
+
 
         if (_zoomSlider != null)
         {
             _zoomSlider.onValueChanged.AddListener(OnZoomSliderValueChanged);
         }
+    }
+
+    public void EnableLocationBtn()
+    {
+        _locationButton.SetActive(true);
     }
 
     public void ShowZoomUIPanel(bool show)
