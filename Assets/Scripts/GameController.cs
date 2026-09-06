@@ -82,7 +82,7 @@ public class GameController : MonoBehaviour
             _uiManager = FindAnyObjectByType<UIManager>();
             if (_uiManager != null)
             {
-                _uiManager.ShowZoomUIPanel(true);
+                //_uiManager.ShowZoomUIPanel(true);
                 _uiManager.EnableLocationBtn();
             }
         }

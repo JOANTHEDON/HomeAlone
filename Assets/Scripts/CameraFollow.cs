@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraFollow : MonoBehaviour
 {
@@ -78,36 +79,50 @@ public class CameraFollow : MonoBehaviour
 
     private void Update()
     {
+        HandleZoomInput(); // Allow zooming all the time
+
         if (!_isPanEnabled) return;
 
         HandlePanInput();
-        HandleZoomInput();
     }
 
     private void HandleZoomInput()
     {
         // Mouse scroll wheel support
-        float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
-        if (Mathf.Abs(scrollDelta) > 0.01f)
+        if (Mouse.current != null)
         {
-            _targetZoom = Mathf.Clamp(_targetZoom - scrollDelta * 5f, _minZoom, _maxZoom);
+            float scrollDelta = Mouse.current.scroll.ReadValue().y;
+            if (Mathf.Abs(scrollDelta) > 0.01f)
+            {
+                // New Input System scroll returns larger values (e.g., 120 per tick), scale it down:
+                _targetZoom = Mathf.Clamp(_targetZoom - scrollDelta * 0.005f, _minZoom, _maxZoom);
+            }
         }
 
         // Pinch-to-zoom support for touch devices
-        if (Input.touchCount == 2)
+        if (Touchscreen.current != null && Touchscreen.current.touches.Count >= 2)
         {
-            Touch touchZero = Input.GetTouch(0);
-            Touch touchOne = Input.GetTouch(1);
+            var touch0 = Touchscreen.current.touches[0];
+            var touch1 = Touchscreen.current.touches[1];
 
-            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
-            Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+            if (touch0.press.isPressed && touch1.press.isPressed)
+            {
+                Vector2 touchZeroPos = touch0.position.ReadValue();
+                Vector2 touchOnePos = touch1.position.ReadValue();
+                Vector2 touchZeroDelta = touch0.delta.ReadValue();
+                Vector2 touchOneDelta = touch1.delta.ReadValue();
 
-            float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
-            float touchDeltaMag = (touchZero.position - touchOne.position).magnitude;
+                Vector2 touchZeroPrevPos = touchZeroPos - touchZeroDelta;
+                Vector2 touchOnePrevPos = touchOnePos - touchOneDelta;
 
-            float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
+                float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+                float touchDeltaMag = (touchZeroPos - touchOnePos).magnitude;
 
-            _targetZoom = Mathf.Clamp(_targetZoom + deltaMagnitudeDiff * 0.01f, _minZoom, _maxZoom);
+                float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
+
+                // Adjust the multiplier here if pinching is too slow or too fast
+                _targetZoom = Mathf.Clamp(_targetZoom + deltaMagnitudeDiff * 0.05f, _minZoom, _maxZoom);
+            }
         }
     }
 
@@ -125,26 +140,68 @@ public class CameraFollow : MonoBehaviour
     private void HandlePanInput()
     {
         // Ignore input if pointer is over UI elements (e.g. turret purchase buttons)
-        if (UnityEngine.EventSystems.EventSystem.current != null &&
-            UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        if (UnityEngine.EventSystems.EventSystem.current != null)
         {
-            _isDragging = false;
-            return;
+            bool pointerOverUI = false;
+            if (Touchscreen.current != null && Touchscreen.current.touches.Count > 0 && Touchscreen.current.touches[0].press.isPressed)
+            {
+                pointerOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(Touchscreen.current.touches[0].touchId.ReadValue());
+            }
+            else
+            {
+                pointerOverUI = UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject();
+            }
+            
+            if (pointerOverUI)
+            {
+                _isDragging = false;
+                return;
+            }
         }
 
-        if (Input.GetMouseButtonDown(0))
+        Vector2 pointerPosition = Vector2.zero;
+        bool isPressDown = false;
+        bool isPressed = false;
+        bool isPressUp = false;
+
+        bool touchActive = Touchscreen.current != null && (Touchscreen.current.primaryTouch.press.isPressed || Touchscreen.current.primaryTouch.press.wasReleasedThisFrame);
+
+        if (touchActive)
         {
-            _dragOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            pointerPosition = Touchscreen.current.primaryTouch.position.ReadValue();
+            isPressDown = Touchscreen.current.primaryTouch.press.wasPressedThisFrame;
+            isPressed = Touchscreen.current.primaryTouch.press.isPressed;
+            isPressUp = Touchscreen.current.primaryTouch.press.wasReleasedThisFrame;
+        }
+        else if (Mouse.current != null)
+        {
+            pointerPosition = Mouse.current.position.ReadValue();
+            isPressDown = Mouse.current.leftButton.wasPressedThisFrame;
+            isPressed = Mouse.current.leftButton.isPressed;
+            isPressUp = Mouse.current.leftButton.wasReleasedThisFrame;
+        }
+
+        if (isPressDown)
+        {
+            if (_cam != null)
+                _dragOrigin = _cam.ScreenToWorldPoint(pointerPosition);
+            else if (Camera.main != null)
+                _dragOrigin = Camera.main.ScreenToWorldPoint(pointerPosition);
+                
             _isDragging = true;
         }
-        else if (Input.GetMouseButton(0) && _isDragging)
+        else if (isPressed && _isDragging)
         {
-            Vector3 currentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 difference = _dragOrigin - currentPos;
+            Vector3 currentPos = Vector3.zero;
+            if (_cam != null)
+                currentPos = _cam.ScreenToWorldPoint(pointerPosition);
+            else if (Camera.main != null)
+                currentPos = Camera.main.ScreenToWorldPoint(pointerPosition);
 
+            Vector3 difference = _dragOrigin - currentPos;
             transform.position += new Vector3(difference.x, difference.y, 0f);
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (isPressUp)
         {
             _isDragging = false;
         }
