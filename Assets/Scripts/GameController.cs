@@ -21,6 +21,9 @@ public class GameController : MonoBehaviour
     private GameObject Player;
     private bool _gameOver= false;
     private GhostController _spawnedGhost;
+    private PlayerController _playerController;
+    private UIManager _uiManager;
+    
 
     private void Start()
     {
@@ -31,6 +34,9 @@ public class GameController : MonoBehaviour
         }
 
         Player = Instantiate(_playerPrefab, _spawnPoint.position, Quaternion.identity);
+        _playerController = Player.GetComponent<PlayerController>();
+        
+        
         InitializeCameraFollow(Player.transform);
 
         if (_uiText != null)
@@ -67,6 +73,18 @@ public class GameController : MonoBehaviour
         {
             DisablePlayer();
             _playerHidden = true;
+
+            // if (_cameraFollow != null)
+            // {
+            //     _cameraFollow.EnablePan(true);
+            // }
+
+            _uiManager = FindAnyObjectByType<UIManager>();
+            if (_uiManager != null)
+            {
+                _uiManager.ShowZoomUIPanel(true);
+                _uiManager.EnableLocationBtn();
+            }
         }
 
         if (_spawnedGhost != null && _spawnedGhost.IsGameOver)
@@ -87,8 +105,11 @@ public class GameController : MonoBehaviour
 
     private void DisablePlayer()
     {
-        if (Player != null)
-            Player.SetActive(false);
+        if (Player == null) return; 
+        if (_playerController != null)
+        {
+            _playerController.DisablePlayerSprite();
+        }
     }
 
     private void SpawnGhost()
@@ -108,5 +129,10 @@ public class GameController : MonoBehaviour
         }
 
         _cameraFollow.SetTarget(target);
+    }
+
+    public void RelocatePlayer()
+    {
+        Player.transform.position = _cradleController.transform.position;
     }
 }
