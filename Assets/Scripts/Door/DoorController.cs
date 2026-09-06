@@ -21,8 +21,10 @@ public class DoorController : MonoBehaviour {
 
     }
 
-    private void OnTriggerExit2D(Collider2D collision) {
-        if (collision.CompareTag("Player")) {
+    public void CloseDoor()
+    {
+        if (DoorspriteRenderer != null && DoorClosed != null)
+        {
             DoorspriteRenderer.sprite = DoorClosed;
             _doorClosed = true;
         }

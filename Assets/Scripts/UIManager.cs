@@ -8,6 +8,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]private Transform _doorUpgradeSpawnPoint;
     [SerializeField]private Transform _cradleUpgradeSpawnPoint;
     [SerializeField]private GameObject _upgradePopUpUI;
+
+    [Header("Zoom UI Settings")]
+    [SerializeField]private GameObject _zoomUIPanel;
+    [SerializeField]private UnityEngine.UI.Slider _zoomSlider;
+    [SerializeField]private CameraFollow _cameraFollow;
+    [SerializeField]private GameObject _locationButton;
+
     private int doorCurrentLevel = 1;
     private int cradleCurrentLevel = 1;
     private bool isDoorupgradeShown = false;
@@ -16,6 +23,8 @@ public class UIManager : MonoBehaviour
     private GameObject activeDoorUpgradeIcon;
     private GameObject activeCradleUpgradeIcon;
     private DoorHealthManager doorHealthManager;
+    
+
 
     private bool _upgradeDoor = false;
     private bool _upgradeCradle= false;
@@ -24,12 +33,64 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        _upgradePopUpUI.gameObject.SetActive(false);
+        if (_upgradePopUpUI != null) _upgradePopUpUI.SetActive(false);
     }
 
     private void Start()
     {
         doorHealthManager = FindAnyObjectByType<DoorHealthManager>();
+        if (_cameraFollow == null) _cameraFollow = FindAnyObjectByType<CameraFollow>();
+        if (_zoomUIPanel != null) _zoomUIPanel.SetActive(false);
+        if(_locationButton != null) _locationButton.SetActive(false);
+
+
+        if (_zoomSlider != null)
+        {
+            _zoomSlider.onValueChanged.AddListener(OnZoomSliderValueChanged);
+        }
+    }
+
+    public void EnableLocationBtn()
+    {
+        _locationButton.SetActive(true);
+    }
+
+    public void ShowZoomUIPanel(bool show)
+    {
+        if (_zoomUIPanel != null)
+        {
+            _zoomUIPanel.SetActive(show);
+        }
+
+        if (show && _zoomSlider != null)
+        {
+            _zoomSlider.value = 0.5f; // Center slider by default
+        }
+    }
+
+    public void OnZoomSliderValueChanged(float value)
+    {
+        if (_cameraFollow == null) _cameraFollow = FindAnyObjectByType<CameraFollow>();
+        if (_cameraFollow != null)
+        {
+            _cameraFollow.SetZoomRatio(value);
+        }
+    }
+
+    public void OnZoomInButtonClicked()
+    {
+        if (_cameraFollow != null)
+        {
+            _cameraFollow.ZoomIn();
+        }
+    }
+
+    public void OnZoomOutButtonClicked()
+    {
+        if (_cameraFollow != null)
+        {
+            _cameraFollow.ZoomOut();
+        }
     }
 
     public void ShowDoorUpgradeButton(int currentCoinCount)
