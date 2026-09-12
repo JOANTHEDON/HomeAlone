@@ -28,6 +28,13 @@ public class TileTurretManager : MonoBehaviour {
             turretUIButton.SetActive(false);
 
         UpdateTurretCostFromConfig();
+
+        CradleController cradle = FindFirstObjectByType<CradleController>();
+        if(cradle != null && grid != null)
+        {
+            Vector3Int cradleToPos = grid.WorldToCell(cradle.transform.position);
+            occupiedTiles.Add(cradleToPos);
+        }
     }
 
     private void UpdateTurretCostFromConfig() {

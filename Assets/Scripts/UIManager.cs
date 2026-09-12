@@ -1,6 +1,8 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -14,6 +16,16 @@ public class UIManager : MonoBehaviour
     [SerializeField]private UnityEngine.UI.Slider _zoomSlider;
     [SerializeField]private CameraFollow _cameraFollow;
     [SerializeField]private GameObject _locationButton;
+
+    [Header("Settings Panel")]
+    [SerializeField]private GameObject _settingsPanel;
+    [SerializeField]private GameObject _settingsButton;
+
+    [Header("Music Part")]
+    [SerializeField]private Sprite _volumeOff;
+    [SerializeField]private Sprite _volumeOn;
+    [SerializeField]private Image _soundButtonImage;
+
 
     private int doorCurrentLevel = 1;
     private int cradleCurrentLevel = 1;
@@ -34,10 +46,17 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         if (_upgradePopUpUI != null) _upgradePopUpUI.SetActive(false);
+        if (_settingsPanel != null) _settingsPanel.SetActive(false);
+        if (_settingsButton != null) _settingsButton.SetActive(true);
     }
 
     private void Start()
     {
+        // Sync music button sprite with actual Audio Manager state
+        if (_soundButtonImage != null && GameAudioManager.Instance != null)
+        {
+            _soundButtonImage.sprite = GameAudioManager.Instance.IsMuted ? _volumeOff : _volumeOn;
+        }
         doorHealthManager = FindAnyObjectByType<DoorHealthManager>();
         if (_cameraFollow == null) _cameraFollow = FindAnyObjectByType<CameraFollow>();
         if (_zoomUIPanel != null) _zoomUIPanel.SetActive(false);
@@ -300,5 +319,36 @@ public class UIManager : MonoBehaviour
         _upgradeTurret = false;
         _activeTurretUpgradeAction = null;
         _upgradePopUpUI.SetActive(false);
+    }
+
+    public void OpenSettingsPanel()
+    {
+        _settingsButton.SetActive(false);
+        _settingsPanel.SetActive(true);
+    }
+
+    public void CloseSettingsPanel()
+    {
+        _settingsButton.SetActive(true);
+        _settingsPanel.SetActive(false);
+    }
+
+    public void ExitGamePlay()
+    {
+        SceneManager.LoadScene("HomeMenuScene");
+    }
+
+    public void ToggleMusicUI()
+    {
+        if (GameAudioManager.Instance == null) return;
+
+        // Toggle the music
+        GameAudioManager.Instance.ToggleMusic();
+
+        // Update the sprite
+        if (_soundButtonImage != null)
+        {
+            _soundButtonImage.sprite = GameAudioManager.Instance.IsMuted ? _volumeOff : _volumeOn;
+        }
     }
 }

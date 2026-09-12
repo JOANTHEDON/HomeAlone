@@ -126,7 +126,10 @@ public class GhostController : MonoBehaviour {
         else
         {
             _attackTimer = 0f;
-            _navmeshAgent.SetDestination(targetPos);
+            if(Vector3.Distance(_navmeshAgent.destination, (Vector3)targetPos) > 0.5f){
+                _navmeshAgent.SetDestination(targetPos);
+            }
+            
         }
     }
 
