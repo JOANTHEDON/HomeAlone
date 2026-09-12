@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -99,8 +100,15 @@ public class GameController : MonoBehaviour
                 _uiText.gameObject.SetActive(true);
                 _uiText.text = "GAME OVER";
                 _coinManager.StopCoinSpawn();
+                StartCoroutine(GoToMainMenu());
             }
         }
+    }
+
+    private IEnumerator GoToMainMenu()
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene("HomeMenuScene");
     }
 
     private void DisablePlayer()
