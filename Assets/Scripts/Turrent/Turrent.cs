@@ -18,6 +18,7 @@ public class Turret : MonoBehaviour {
     private GameObject activeUpgradeIcon;
     private CoinManager coinManager;
     private UIManager uiManager;
+    private float _searchTimer = 0f;
 
 
     private GhostHealth currentTarget;
@@ -63,17 +64,20 @@ public class Turret : MonoBehaviour {
         }
     }
 
+    
     private void FindTarget() {
         if (currentTarget != null) {
             float distance = Vector2.Distance(transform.position, currentTarget.transform.position);
             if (distance <= attackRange) return;
             currentTarget = null;
         }
-
+        // Check for new targets only every 0.25 seconds to save CPU performance
+        _searchTimer -= Time.deltaTime;
+        if (_searchTimer > 0) return;
+        _searchTimer = 0.25f;
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, attackRange, ghostLayer);
         float closestDistance = Mathf.Infinity;
         GhostHealth closestGhost = null;
-
         foreach (var col in hitColliders) {
             GhostHealth ghost = col.GetComponent<GhostHealth>();
             if (ghost != null) {
@@ -84,7 +88,6 @@ public class Turret : MonoBehaviour {
                 }
             }
         }
-
         currentTarget = closestGhost;
     }
 
